@@ -1,45 +1,65 @@
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-//this is the database class
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
 public class DbConnect {
 
-        static private DbConnect instance;
-        static private Connection con;
-        static private Statement stmt;
-        static private ResultSet rs;
-//i am using a private constructor due to the need to apply Singleton approach
-        public DbConnect() {
-            getConnection();
+    private static DbConnect instance;
+    private Connection conn;
+    private String db = "jdbc:mysql://52.50.23.197:3306/world";
+    private String username = "cctstudent";
+    private String password = "Pass1234!";
 
-        }
-        //this method checks if there is not already a connection running an returns a connection instance if so
-        public static DbConnect getInstance() throws SQLException {
-            if (instance == null) {
-                instance = new DbConnect();
+    private DbConnect() {
+
+
+        try {
+
+            // Get a connection to the database
+            Connection conn = DriverManager.getConnection(db, username, password);
+
+            // Get a statement from the connection
+            Statement stmt = conn.createStatement();
+
+            // Execute the query
+            ResultSet rs = stmt.executeQuery("SELECT * FROM country");
+
+            // Loop through the result set
+            while (rs.next())
+            System.out.println(rs.getString("Code"));
+            // Close the result set, statement and the connection
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            System.out.println("SQL Exception:");
+
+            // Loop through the SQL Exceptions
+            while (se != null) {
+                System.out.println("State  : " + se.getSQLState());
+                System.out.println("Message: " + se.getMessage());
+                System.out.println("Error  : " + se.getErrorCode());
+
+                se = se.getNextException();
             }
-            return instance;
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        //this method establishes the connection with the data base (I have not finished yet.. to be honest im kinda lost
-        public Connection getConnection(){
-            if(con==null){
-                try {
-                    String host = "jdbc:mysql://52.50.23.197:3306/world";
-                    String username = "cctstudent";
-                    String password = "Pass1234!";
-                    String query = "SELECT * FROM country";
-                    con = DriverManager.getConnection(host, username, password);
 
-                /*    while (rs.next()){
-                        System.out.println(rs.getString("Code")) + "\t" + rs.getString("Name")+ "\t" + rs.getString("Continent")+ "\t" + rs.getString("SurfaceArea") + "\t" + rs.getString("HeadOfState"));
-                    }  */
+    }
 
-                } catch(SQLException ex) {
-                    Logger.getLogger(DbConnect.class.getName()).log(Level.SEVERE, null,ex);
-                }
-
-                }
-            return con;
-            
+    public static DbConnect getInstance() {
+        if (instance == null) {
+            instance = new DbConnect();
         }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        return conn;
+    }
+
 }
