@@ -4,36 +4,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+    //this class recieves the data and delivers it to the next next class (countryDAO or database)
+    // it is a bridge between the database class and the countryDAO
 public class DbConnect {
 
     private static DbConnect instance;
-    private Connection conn;
     private String db = "jdbc:mysql://52.50.23.197:3306/world";
     private String username = "cctstudent";
     private String password = "Pass1234!";
 
+    private Connection conn;
+    private Statement stmt;
+    private ResultSet rs = null;
+
+    //my constructor method establishes the db connection
     private DbConnect() {
 
 
         try {
 
             // Get a connection to the database
-            Connection conn = DriverManager.getConnection(db, username, password);
+            DriverManager.getConnection(db, username, password);
 
             // Get a statement from the connection
-            Statement stmt = conn.createStatement();
+            conn.createStatement();
 
-            // Execute the query
-            ResultSet rs = stmt.executeQuery("SELECT * FROM country");
-
-            // Loop through the result set
-            while (rs.next())
-            System.out.println(rs.getString("Code"));
-            // Close the result set, statement and the connection
-            rs.close();
-            stmt.close();
-            conn.close();
         } catch (SQLException se) {
             System.out.println("SQL Exception:");
 
@@ -61,5 +56,42 @@ public class DbConnect {
     public Connection getConnection() {
         return conn;
     }
+    //executes and stores the new data to the db
+    public boolean storeNew(String query) {
+        // Execute the query
+        try {
+            stmt.execute(query);
+            return true;
 
+        } catch (SQLException e) {
+            //catch block
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //method that selects any query that the client needs
+    public ResultSet select(String query) {
+        // Execute the query
+        try {
+            rs = stmt.executeQuery(query);
+
+
+        } catch (SQLException e) {
+            //catch block
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    // close method closes the result,  statement and the connection
+    public void close() {
+        try {
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2b133ba-7cb4-476f-9f8d-80c00dfe2c31" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/interfaces/CountryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OODP-CA/DbConnect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OODP-CA/DbConnect.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DbConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DbConnect.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +17,7 @@
       <list>
         <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
