@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2b133ba-7cb4-476f-9f8d-80c00dfe2c31" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/interfaces/CountryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/Country.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/MySQLCountryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DbConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DbConnect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Continent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Continent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Country.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DbConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/DbConnect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/CountryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/CountryDAO.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,9 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -31,6 +38,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -57,7 +65,7 @@
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="classes.Main" />
       <module name="OODP-CA" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -94,19 +102,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>4</line>
-          <properties class="Main" method="main">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
