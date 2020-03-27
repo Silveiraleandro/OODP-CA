@@ -4,49 +4,53 @@ public class Country {
 
     private int code;
     private String name;
-    private String continent;
-    private Float surfaceArea;
+    private Continent continent;
+    private float surfaceArea;
     private String headOfState;
 
-    public Country(int code, String name, String continent, Float surfaceArea, String headOfState) {
+    //Defining a constructor that have the object builder bringing
+//all the attributes that the Country has
+    private Country(BuilderCountry builder) {
 
-        this.code = code;
-        this.name = name;
-        this.continent = continent;
-        this.surfaceArea = surfaceArea;
-        this.headOfState = headOfState;
+        this.code = builder.code;
+        this.name = builder.name;
+        this.continent = builder.continent;
+        this.surfaceArea = builder.surfaceArea;
+        this.headOfState = builder.headOfState;
 
     }
 
     public int getCode() {
+
         return code;
     }
 
     public void setCode(int code) {
+
         this.code = code;
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
-    public String getContinent() {
+    public Continent getContinent() {
+
         return continent;
     }
 
-    public void setContinent(String continent) {
-        this.continent = continent;
-    }
+    public float getSurfaceArea() {
 
-    public Float getSurfaceArea() {
         return surfaceArea;
     }
 
-    public void setSurfaceArea(Float surfaceArea) {
+    public void setSurfaceArea(float surfaceArea) {
         this.surfaceArea = surfaceArea;
     }
 
@@ -59,6 +63,28 @@ public class Country {
     }
 
     public void addCountry() {
+
+    }
+    public static class BuilderCountry{
+
+        private int code;
+        private String name;
+        private Continent continent;
+        private float surfaceArea;
+        private String headOfState;
+
+        public BuilderCountry(int code, String name, Continent continent, float surfaceArea, String headOfState){
+
+            this.code = code;
+            this.name = name;
+            this.continent = continent;
+            this.surfaceArea = surfaceArea;
+            this.headOfState = headOfState;
+        }
+
+        public Country build(){
+            return new Country(this);
+        }
 
     }
 }
