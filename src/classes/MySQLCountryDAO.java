@@ -93,7 +93,7 @@ public class MySQLCountryDAO implements CountryDAO {
                 headOfState = rs.getString(5);
 
                 c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
-                //c = new builder
+
                 return c;
             }
 
