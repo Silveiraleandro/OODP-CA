@@ -16,6 +16,9 @@ public class MySQLCountryDAO implements CountryDAO {
 
         String query = "SELECT * FROM country";
         ResultSet rs = DbConnect.getInstance().select(query);
+
+        System.out.println(rs);
+
         int code = 0;
         String name = "";
         Continent continent;
