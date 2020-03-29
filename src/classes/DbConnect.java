@@ -14,9 +14,8 @@ public class DbConnect {
     private String db = "jdbc:mysql://52.50.23.197:3306/world";
     private String username = "cctstudent";
     private String password = "Pass1234!";
-
     private Connection conn;
-    private Statement stmt;
+    private Statement stmt = null;
     private ResultSet rs = null;
 
     //my constructor method establishes the db connection
@@ -24,12 +23,11 @@ public class DbConnect {
 
 
         try {
+            // Get a statement from the connection
 
             // Get a connection to the database
-            DriverManager.getConnection(db, username, password);
-
-            // Get a statement from the connection
-            conn.createStatement();
+            Connection conn = DriverManager.getConnection(db, username, password);
+            this.conn = conn;
 
         } catch (SQLException se) {
             System.out.println("SQL Exception:");
@@ -45,6 +43,7 @@ public class DbConnect {
         } catch (Exception e) {
             System.out.println(e);
         }
+        instance = this;
 
     }
 
@@ -76,8 +75,7 @@ public class DbConnect {
     public ResultSet select(String query) {
         // Execute the query
         try {
-            rs = stmt.executeQuery(query);
-
+        stmt = conn.createStatement();
 
         } catch (SQLException e) {
             //catch block

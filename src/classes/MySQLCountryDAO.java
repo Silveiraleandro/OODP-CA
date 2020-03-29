@@ -33,11 +33,14 @@ public class MySQLCountryDAO implements CountryDAO {
 
             c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
             countries.add(c);
+                System.out.println(c);
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
+
         return countries;
+
     }
     //This method receives a code from the outside and calls the db with the given query
     //populates the variables with the result set, creates a instance of country and returns it
