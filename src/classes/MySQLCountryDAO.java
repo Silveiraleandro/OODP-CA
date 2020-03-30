@@ -28,12 +28,12 @@ public class MySQLCountryDAO implements CountryDAO {
 */
         try {
             while (rs.next()) {
-               String code = rs.getString(1);
-               String name = rs.getString(2);
-               Continent continent = Continent.valueOf(rs.getString(3).replace(" "," " ));
-               float surfaceArea = rs.getFloat(4);
-               String headOfState = rs.getString(5);
 
+                String code = rs.getString(1);
+                String name = rs.getString(2);
+                Continent continent = Continent.valueOf(rs.getString(3).replace(" ", ""));
+                float surfaceArea = rs.getFloat(4);
+                String headOfState = rs.getString(5);
 
                 Country c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
                 countries.add(c);
