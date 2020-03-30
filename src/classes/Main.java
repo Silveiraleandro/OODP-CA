@@ -22,7 +22,7 @@ public class Main {
         System.out.println(test);
 
         //by name
-        Country test1 = dao.findCountryByName("Brazil");
+        Country test1 = dao.findCountryByName("Brasil");
         System.out.println(test1);
 
 
