@@ -44,7 +44,6 @@ public class Country {
 
         return continent;
     }
-
     public void setContinent(Continent continent) {
         this.continent = continent;
     }
@@ -52,6 +51,17 @@ public class Country {
     public float getSurfaceArea() {
 
         return surfaceArea;
+    }
+    //method to show the actual values of the data in the terminal
+    @Override
+    public String toString() {
+        return "Country{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", continent=" + continent +
+                ", surfaceArea=" + surfaceArea +
+                ", headOfState='" + headOfState + '\'' +
+                '}';
     }
 
     public void setSurfaceArea(float surfaceArea) {

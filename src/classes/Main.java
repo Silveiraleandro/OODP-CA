@@ -11,10 +11,21 @@ public class Main {
 
         CountryDAO dao = new MySQLCountryDAO();
         ArrayList<Country>countries = dao.getCountries();
-
+        System.out.println(countries);
+       //all countries
         for(Country c : countries){
-            System.out.println(c);
+            System.out.println();
+
         }
+        //by code
+        Country test = dao.findCountryByCode("143");
+        System.out.println(test);
+
+        //by name
+        Country test1 = dao.findCountryByName("Brazil");
+        System.out.println(test1);
+
+
 
     /*   CountryDAO dao = new MySQLCountryDAO();
 
