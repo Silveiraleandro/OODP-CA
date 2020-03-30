@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MySQLCountryDAO implements CountryDAO {
+
     //Creating instances of countries and saving them in an Array list of countries
     // and returning the result of the array
     @Override
@@ -17,26 +18,26 @@ public class MySQLCountryDAO implements CountryDAO {
 
         String query = "SELECT * FROM country";
         ResultSet rs = DbConnect.getInstance().select(query);
-
-        System.out.println(rs);
-
+/*
         String code = "";
         String name = "";
         Continent continent;
         float surfaceArea = 0;
         String headOfState = "";
         Country c = null;
-
+*/
         try {
             while (rs.next()) {
-                code = rs.getString(1);
-                name = rs.getString(2);
-                continent = Continent.valueOf(rs.getString(3));
-                surfaceArea = rs.getFloat(4);
-                headOfState = rs.getString(5);
+               String code = rs.getString(1);
+               String name = rs.getString(2);
+               Continent continent = Continent.valueOf(rs.getString(3).replace(" "," " ));
+               float surfaceArea = rs.getFloat(4);
+               String headOfState = rs.getString(5);
 
-                c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
+
+                Country c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
                 countries.add(c);
+                System.out.println(c);
 
             }
         } catch (SQLException e) {

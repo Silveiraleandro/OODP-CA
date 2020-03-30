@@ -3,11 +3,21 @@ package classes;
 public enum Continent {
 
 //Enum class for classes.Continent since the continents won't ever change
-    Europe,
-    Asia,
-    NorthAmerica,
-    SouthAmerica,
-    Africa,
-    Oceania,
-    Antarctica;
+    Europe("Europe"),
+    Asia("Asia"),
+    NorthAmerica("North America"),
+    SouthAmerica("South America"),
+    Africa("Africa"),
+    Oceania("Oceania"),
+    Antarctica("Antarctica");
+
+    private final String continent;
+
+    //constructor
+    private Continent(String continent){
+        this.continent = continent;
+    }
+
+
+
 }

@@ -45,6 +45,10 @@ public class Country {
         return continent;
     }
 
+    public void setContinent(Continent continent) {
+        this.continent = continent;
+    }
+
     public float getSurfaceArea() {
 
         return surfaceArea;
