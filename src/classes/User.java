@@ -40,5 +40,26 @@ public class User {
                 System.exit(1);
             }
         }
+    public void userMenu (Integer option) {
+            MySQLCountryDAO dao = new MySQLCountryDAO();
+        switch(option) {
+            case 1:
+                dao.getCountries();
+                break;
+            case 2:
+                dao.findCountryByCode();
+                break;
+            case 3:
+                dao.findCountryByName();
+                break;
+            case 4:
+                dao.saveCountry();
+                break;
+            default:
+                System.out.println("Have a nice day!");
+                System.exit(0);
+        }
+        menu();
+    }
     }
 

@@ -4,6 +4,8 @@
     <list default="true" id="d2b133ba-7cb4-476f-9f8d-80c00dfe2c31" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/MySQLCountryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/MySQLCountryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/User.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

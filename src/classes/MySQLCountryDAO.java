@@ -55,6 +55,7 @@ public class MySQLCountryDAO implements CountryDAO {
     //populates the variables with the result set, creates a instance of country and returns it
     @Override
     public Country findCountryByCode(String code) {
+
         Country thisCountry = null;
         String query = "SELECT * FROM country WHERE code = " + code + ";";
         ResultSet rs = DbConnect.getInstance().select(query);
@@ -89,8 +90,9 @@ public class MySQLCountryDAO implements CountryDAO {
     //populates the variables with the result set, creates a instance of country and returns it
     @Override
     public Country findCountryByName(String name) {
+
         Country thisCountry = null;
-        String query = "SELECT * FROM country WHERE name = " + name + ";";
+        String query = "SELECT * FROM country WHERE Name = '" + name + "';" ;
         ResultSet rs = DbConnect.getInstance().select(query);
 
         try {
