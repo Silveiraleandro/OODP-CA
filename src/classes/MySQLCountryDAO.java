@@ -18,24 +18,29 @@ public class MySQLCountryDAO implements CountryDAO {
 
         String query = "SELECT * FROM country";
         ResultSet rs = DbConnect.getInstance().select(query);
-/*
+
         String code = "";
         String name = "";
         Continent continent;
         float surfaceArea = 0;
         String headOfState = "";
         Country c = null;
-*/
+
+
         try {
             while (rs.next()) {
 
-                String code = rs.getString(1);
-                String name = rs.getString(2);
-                Continent continent = Continent.valueOf(rs.getString(3).replace(" ", ""));
-                float surfaceArea = rs.getFloat(4);
-                String headOfState = rs.getString(5);
+                code = rs.getString(1);
+                name = rs.getString(2);
+                String continentName = rs.getString(3).replace(" ","");
+                if(continentName.isEmpty()) {
+                    continue;
+                }
+                continent = Continent.valueOf(rs.getString(3).replace(" ", ""));
+                surfaceArea = rs.getFloat(4);
+                headOfState = rs.getString(5);
 
-                Country c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
+                c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
                 countries.add(c);
                 System.out.println(c);
 

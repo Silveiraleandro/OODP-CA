@@ -61,7 +61,9 @@ public class DbConnect {
     //executes and stores the new data to the db
     public boolean storeNew(String query) {
         // Execute the query
+
         try {
+            stmt = conn.createStatement();
             stmt.execute(query);
             return true;
 
