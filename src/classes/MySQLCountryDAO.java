@@ -1,6 +1,7 @@
 package classes;
 
 import interfaces.CountryDAO;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,14 +13,14 @@ public class MySQLCountryDAO implements CountryDAO {
     public ArrayList<Country> getCountries() {
 
 
-        ArrayList<Country>countries = new ArrayList<Country>();
+        ArrayList<Country> countries = new ArrayList<Country>();
 
         String query = "SELECT * FROM country";
         ResultSet rs = DbConnect.getInstance().select(query);
 
         System.out.println(rs);
 
-        int code = 0;
+        String code = "";
         String name = "";
         Continent continent;
         float surfaceArea = 0;
@@ -27,28 +28,29 @@ public class MySQLCountryDAO implements CountryDAO {
         Country c = null;
 
         try {
-            while (rs.next()){
-            code = rs.getInt(1);
-            name = rs.getString(2);
-            continent = Continent.valueOf(rs.getString(3));;
-            surfaceArea = rs.getFloat(4);
-            headOfState = rs.getString(5);
+            while (rs.next()) {
+                code = rs.getString(1);
+                name = rs.getString(2);
+                continent = Continent.valueOf(rs.getString(3));
+                surfaceArea = rs.getFloat(4);
+                headOfState = rs.getString(5);
 
-            c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
-            countries.add(c);
-                System.out.println(c);
+                c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
+                countries.add(c);
+
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return countries;
 
     }
+
     //This method receives a code from the outside and calls the db with the given query
     //populates the variables with the result set, creates a instance of country and returns it
     @Override
-    public Country findCountryByCode(int code) {
+    public Country findCountryByCode(String code) {
 
         String query = "SELECT * FROM country WHERE code = " + code + ";";
         ResultSet rs = DbConnect.getInstance().select(query);
@@ -59,7 +61,7 @@ public class MySQLCountryDAO implements CountryDAO {
         Country c = null;
 
         try {
-            if (rs.next()){
+            if (rs.next()) {
                 name = rs.getString(2);
                 continent = Continent.valueOf(rs.getString(3));
                 surfaceArea = rs.getFloat(4);
@@ -71,7 +73,7 @@ public class MySQLCountryDAO implements CountryDAO {
 
             return null;
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -85,15 +87,15 @@ public class MySQLCountryDAO implements CountryDAO {
 
         String query = "SELECT * FROM country WHERE name = " + name + ";";
         ResultSet rs = DbConnect.getInstance().select(query);
-        int code = 0;
+        String code = "";
         Continent continent;
         float surfaceArea = 0;
         String headOfState = "";
         Country c = null;
 
         try {
-            if (rs.next()){
-                code = rs.getInt(1);
+            if (rs.next()) {
+                code = rs.getString(1);
                 continent = Continent.valueOf(rs.getString(3));
                 surfaceArea = rs.getFloat(4);
                 headOfState = rs.getString(5);
@@ -105,7 +107,7 @@ public class MySQLCountryDAO implements CountryDAO {
 
             return null;
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -114,13 +116,13 @@ public class MySQLCountryDAO implements CountryDAO {
     @Override
     public boolean saveCountry(Country country) {
 
-        int code = country.getCode();
+        String code = country.getCode();
         String name = country.getName();
         Continent continent = country.getContinent();
         float surfaceArea = country.getSurfaceArea();
         String headOfState = country.getHeadOfState();
 
-        String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values("+code+", '"+name+"', '"+continent+"', "+surfaceArea+", '"+headOfState+"');";
+        String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values(" + code + ", '" + name + "', '" + continent + "', " + surfaceArea + ", '" + headOfState + "');";
         return DbConnect.getInstance().storeNew(query);
     }
 }

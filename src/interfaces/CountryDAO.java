@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public interface CountryDAO {
     public ArrayList<Country> getCountries();
 
-    public Country findCountryByCode(int code);
+    public Country findCountryByCode(String code);
 
     public Country findCountryByName(String name);
 

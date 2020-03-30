@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-    //this class recieves the data and delivers it to the next next class (countryDAO or database)
-    // it is a bridge between the database class and the countryDAO
+//this class recieves the data and delivers it to the next next class (countryDAO or database)
+// it is a bridge between the database class and the countryDAO
 public class DbConnect {
 
     private static DbConnect instance;
@@ -57,6 +57,7 @@ public class DbConnect {
     public Connection getConnection() {
         return conn;
     }
+
     //executes and stores the new data to the db
     public boolean storeNew(String query) {
         // Execute the query
@@ -75,23 +76,24 @@ public class DbConnect {
     public ResultSet select(String query) {
         // Execute the query
         try {
-        stmt = conn.createStatement();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
 
-        } catch (SQLException e) {
-            //catch block
-            e.printStackTrace();
+            } catch(SQLException e){
+                //catch block
+                e.printStackTrace();
+            }
+            return rs;
         }
-        return rs;
-    }
 
-    // close method closes the result,  statement and the connection
-    public void close() {
-        try {
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        // close method closes the result,  statement and the connection
+        public void close () {
+            try {
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
-}

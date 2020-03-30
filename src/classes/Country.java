@@ -2,7 +2,7 @@ package classes;
 
 public class Country {
 
-    private int code;
+    private String code;
     private String name;
     private Continent continent;
     private float surfaceArea;
@@ -20,12 +20,12 @@ public class Country {
 
     }
 
-    public int getCode() {
+    public String getCode() {
 
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
 
         this.code = code;
     }
@@ -67,13 +67,13 @@ public class Country {
     }
     public static class BuilderCountry{
 
-        private int code;
+        private String code;
         private String name;
         private Continent continent;
         private float surfaceArea;
         private String headOfState;
 
-        public BuilderCountry(int code, String name, Continent continent, float surfaceArea, String headOfState){
+        public BuilderCountry(String code, String name, Continent continent, float surfaceArea, String headOfState){
 
             this.code = code;
             this.name = name;
