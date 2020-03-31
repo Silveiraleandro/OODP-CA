@@ -19,5 +19,10 @@ public enum Continent {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Continent{" +
+                "continent='" + continent + '\'' +
+                '}';
+    }
 }

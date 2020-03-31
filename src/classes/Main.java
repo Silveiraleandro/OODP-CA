@@ -8,11 +8,14 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
+        User userMenu = new User();
+        userMenu.menu();
 
-        CountryDAO dao = new MySQLCountryDAO();
+     /*   CountryDAO dao = new MySQLCountryDAO();
         ArrayList<Country>countries = dao.getCountries();
         System.out.println(countries);
        //all countries
+        ArrayList<Country>countries = dao.getCountries();
         for(Country c : countries){
             System.out.println();
 
@@ -26,6 +29,15 @@ public class Main {
         System.out.println(test1);
 
         //saveCountry
+        Country.BuilderCountry builder = new Country.BuilderCountry("pp", "boteco", Continent.Antarctica, 2009, "Juliao");
+        Country x = builder.build();
+        System.out.println(x);
+
+        MySQLCountryDAO countryToSave = new MySQLCountryDAO(x);                 */
+
+        /*c.addCountry();
+        MySQLCountryDAO newCountry = new MySQLCountryDAO();    */
+
 
 
 
