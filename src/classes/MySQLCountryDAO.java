@@ -115,7 +115,7 @@ public class MySQLCountryDAO implements CountryDAO {
         return requestedCountries;
 
     }
-
+    //This method receives a country coming from the user class and saves this new entrance into the database
     @Override
     public boolean saveCountry(Country country) {
 

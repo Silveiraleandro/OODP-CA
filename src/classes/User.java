@@ -1,6 +1,7 @@
 package classes;
 
 import interfaces.CountryDAO;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,18 +10,29 @@ import java.util.ArrayList;
 //this class shows a menu and connects with the class Main
 public class User {
 
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     CountryDAO daobj = new MySQLCountryDAO();
     Country country;
 
 
     public User() {
 
-        menu();
+        userMenu();
     }
 
-    //menu method displays the menu
-    public void menu() {
+    //method to read input from the user
+    private String userReader() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String input = null;
+        try {
+            input = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return input;
+    }
+
+    //method that displays the main menu that the user sees
+    public void userMenu() {
 
         System.out.println("-----------------------------------");
         System.out.println("Menu Options to:");
@@ -32,25 +44,22 @@ public class User {
         System.out.println("----------------------------------");
         System.out.print("Please select an option from 1-5\r\n");
 
-        try {
-            int input = Integer.parseInt(reader.readLine());
+        String input = userReader();
+        int in = Integer.parseInt(input);
 
-            if (input < 0 || input > 5) {
-                System.out.println("You have entered an invalid selection, please try again\r\n");
-            } else if (input == 5) {
-                System.out.println("You have quit the program\r\n");
-                System.exit(1);
-            } else {
-                System.out.println("You have chosen to: ");
-                userMenu(input);
-            }
-        } catch (IOException ioe) {
-            System.out.println("IO error trying to read your input!\r\n");
+        if (input.length() < 0 || input.length() > 5) {
+            System.out.println("You have entered an invalid selection, please try again\r\n");
+            internalMenu(in);
+        } else if (input.equals(5)) {
+            System.out.println("You have quit the program\r\n");
             System.exit(1);
+        } else {
+            System.out.println("You have chosen to: ");
+            internalMenu(in);
         }
     }
-
-    public void userMenu(Integer option) {
+    //this method displays the internalMenu
+    public void internalMenu(Integer option) {
         MySQLCountryDAO dao = new MySQLCountryDAO();
         switch (option) {
             case 1:
@@ -66,79 +75,72 @@ public class User {
                 createCountry();
                 break;
             default:
-                System.out.println("Have a nice day!");
+                System.out.println("See you again soon!");
                 System.exit(0);
         }
-        menu();
+        userMenu();
     }
-
+    //method that displays all the countries in the db
     private void viewAllCountries() {
         System.out.println("view all Countries!\n");
 
         ArrayList<Country> allCountries = daobj.getCountries();
         System.out.println(allCountries);
-        menu();
+        userMenu();
     }
-
+    //method that searches for a country in the db, which code matches a code given by a user and prints the country in the terminal
     private void searchCountryByCode() {
 
         System.out.println("Find a Country by it's Code!");
         System.out.println(" Type in the Country code: \n ");
 
-        String input = null;
-
-        try {
-            input = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String input = userReader();
 
         if (input.length() <= 3) {
             country = daobj.findCountryByCode(input);
-            System.out.println("Result of your search is:");
+            System.out.println("The result search for the code " + input + " is:");
             System.out.println(country);
-            menu();
+            userMenu();
         } else {
-            System.out.println("Please Try a valid code with max 3 digits.\n");
-            menu();
+
+            System.out.println("Sorry but " + input + " is not a valid code. Please enter a code with max 3 digits.\n");
+            searchCountryByCode();
         }
     }
-
+    //method that searches for one or more countries in the db, which name matches a name given by a user and prints the country(s) in the terminal
     private void searchCountryByName() {
         System.out.println("Find a Country by it's Name!");
         System.out.println("Type in the Country Name: \n");
 
-        String input;
-
         ArrayList<Country> countries = null;
-        try {
-            input = reader.readLine();
-            countries = daobj.findCountryByName(input);
+        String input = userReader();
+        countries = daobj.findCountryByName(input);
+
+        if (countries.size() <= 0) {
+
+            System.out.println("Sorry but we could not find " + input + " in our list");
+        } else {
+
+            System.out.println("The result search for the name " + input + " is:");
             System.out.println(countries);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        System.out.println("Result of your search:");
-        System.out.println(countries);
-        menu();
+        userMenu();
     }
-
+    //method creates and save a new country in the db
     private void createCountry() {
-
-        String input =null;
-
+        //display in the screen
         System.out.println("Create and save a new Country!");
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
 
-        try {
-            input = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (input.length() > 3 || input.length() < 1){
+        //code insertion validation
+        String input = userReader();
+        if (input.length() > 3) {
             System.out.println("Please try again typing in a 1, 2 or 3 digits code");
-        createCountry();
+            createCountry();
+        }else if (daobj.findCountryByCode(input).equals(" ")) {
+            System.out.println("The code "+input+" already exists in oustem. Please insert a different code");
         }
+        System.out.println("Please insert the country name: ");
 
     }
 

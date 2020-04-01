@@ -43,7 +43,7 @@ public class Country {
     //method to show the actual values of the data in the terminal
     @Override
     public String toString() {
-        return "Country{" +
+        return "Country{" +'\n'+
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", continent=" + continent +
