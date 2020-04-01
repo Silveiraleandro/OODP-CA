@@ -1,7 +1,7 @@
 package classes;
 
 public class Country {
-
+    //encapsulated attributes of the class
     private String code;
     private String name;
     private Continent continent;
@@ -9,7 +9,7 @@ public class Country {
     private String headOfState;
 
     //Defining a constructor that have the object builder bringing
-//all the attributes that the Country has
+    //all the attributes that the Country has
     private Country(BuilderCountry builder) {
 
         this.code = builder.code;
@@ -25,33 +25,21 @@ public class Country {
         return code;
     }
 
-    public void setCode(String code) {
-
-        this.code = code;
-    }
-
     public String getName() {
 
         return name;
-    }
-
-    public void setName(String name) {
-
-        this.name = name;
     }
 
     public Continent getContinent() {
 
         return continent;
     }
-    public void setContinent(Continent continent) {
-        this.continent = continent;
-    }
 
     public float getSurfaceArea() {
 
         return surfaceArea;
     }
+
     //method to show the actual values of the data in the terminal
     @Override
     public String toString() {
@@ -64,30 +52,24 @@ public class Country {
                 '}';
     }
 
-    public void setSurfaceArea(float surfaceArea) {
-        this.surfaceArea = surfaceArea;
-    }
 
     public String getHeadOfState() {
         return headOfState;
     }
-
+    //setter left in case a user wants to set a head of state
     public void setHeadOfState(String headOfState) {
         this.headOfState = headOfState;
     }
-
-    public void addCountry() {
-
-    }
-    public static class BuilderCountry{
+    //this method is the one in charge of creating all instances of the Country Class
+    public static class BuilderCountry {
 
         private String code;
         private String name;
         private Continent continent;
         private float surfaceArea;
         private String headOfState;
-
-        public BuilderCountry(String code, String name, Continent continent, float surfaceArea, String headOfState){
+        //creates the objects builder
+        public BuilderCountry(String code, String name, Continent continent, float surfaceArea, String headOfState) {
 
             this.code = code;
             this.name = name;
@@ -96,7 +78,7 @@ public class Country {
             this.headOfState = headOfState;
         }
 
-        public Country build(){
+        public Country build() {
             return new Country(this);
         }
 
