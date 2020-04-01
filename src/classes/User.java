@@ -151,17 +151,39 @@ public class User {
         //continent insertion information
         System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: "
                 + "\n1 - Asia\n2 - Africa\n3 - Oceania\n4 - Europe\n5 Antarctica\n6 - North America \n7 - South America");
-        String input = String.valueOf(continentChoice());
+        System.out.println("Please enter only one number from 1 to 7.");
 
+        //saving in the variable input the user input that is coming with the method
+        Continent continent = continentChoice();
 
+        //Surface area insertion information
+        System.out.println("Please insert the land area of the country");
+        float inputSurfaceArea = Float.parseFloat(userReader());
+
+        //headOfState insertion information
+        System.out.println("Please insert the name of the President/king");
+        String inputHeadOfState =userReader();
+
+        //Create a new object country with all the attributes
+        country = new Country.BuilderCountry(inputCode, inputName, continent, inputSurfaceArea, inputHeadOfState).build();
+
+        //saving the created new country
+        daobj.saveCountry(country);
+
+        //display message to user
+        System.out.println(inputName + "is the new country created by you and saved in the system");
+
+        userMenu();
     }
+    //this method facilitates when choosing the continent.
+    // It is basically a Switch is a control statement that allows a value to change control of execution.
     public Continent continentChoice() {
 
         Continent inputContinent = null;
 
         String option = userReader();
         while(!option.matches("[1-7]")) {
-            System.out.println("Please enter a single number from 1 to 7.");
+
         }
         switch(Integer.parseInt(option)) {
             case 1:
