@@ -1,6 +1,8 @@
 package classes;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import interfaces.CountryDAO;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -128,20 +130,64 @@ public class User {
     }
     //method creates and save a new country in the db
     private void createCountry() {
-        //display in the screen
+        //display code insertion information to the user
         System.out.println("Create and save a new Country!");
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
 
         //code insertion validation
-        String input = userReader();
-        if (input.length() > 3) {
-            System.out.println("Please try again typing in a 1, 2 or 3 digits code");
-            createCountry();
-        }else if (daobj.findCountryByCode(input).equals(" ")) {
-            System.out.println("The code "+input+" already exists in oustem. Please insert a different code");
-        }
-        System.out.println("Please insert the country name: ");
+        String inputCode = userReader();
+       if (inputCode.length() > 3) {
+           System.out.println("Please try again typing in a 1, 2 or 3 digits code");
+           createCountry();
 
+        /*duplication code validation
+       if (daobj.findCountryByCode(inputCode)!=null) {
+                System.out.println("The code " + inputCode + " already exists in our system. Please insert a different code"); */
+       }
+        //display name insertion information to the user
+        System.out.println("Please insert the country name: ");
+        String inputName = userReader();
+
+        //continent insertion information
+        System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: "
+                + "\n1 - Asia\n2 - Africa\n3 - Oceania\n4 - Europe\n5 Antarctica\n6 - North America \n7 - South America");
+        String input = String.valueOf(continentChoice());
+
+
+    }
+    public Continent continentChoice() {
+
+        Continent inputContinent = null;
+
+        String option = userReader();
+        while(!option.matches("[1-7]")) {
+            System.out.println("Please enter a single number from 1 to 7.");
+        }
+        switch(Integer.parseInt(option)) {
+            case 1:
+                inputContinent = Continent.Asia;
+                break;
+            case 2:
+                inputContinent = Continent.Africa;
+                break;
+            case 3:
+                inputContinent = Continent.Oceania;
+                break;
+            case 4:
+                inputContinent = Continent.Europe;
+                break;
+            case 5:
+                inputContinent = Continent.Antarctica;
+                break;
+            case 6:
+                inputContinent = Continent.NorthAmerica;
+                break;
+            case 7:
+                inputContinent = Continent.SouthAmerica;
+                break;
+        }
+
+        return inputContinent;
     }
 
 }
