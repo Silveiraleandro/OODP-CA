@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class User {
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    public CountryDAO daobj = new MySQLCountryDAO();
+    CountryDAO daobj = new MySQLCountryDAO();
     Country country;
+
 
     public User() {
 
@@ -104,23 +105,21 @@ public class User {
     }
 
     private void searchCountryByName() {
-
         System.out.println("Find a Country by it's Name!");
         System.out.println("Type in the Country Name: \n");
 
         String input;
-        ArrayList<Country>allCountries = null;
 
+        ArrayList<Country> countries = null;
         try {
             input = reader.readLine();
-            country = daobj.findCountryByName(input);
+            countries = daobj.findCountryByName(input);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        allCountries.add(country);
         System.out.println("Result of your search:");
-        System.out.println(allCountries);
+        System.out.println(countries);
         menu();
     }
 

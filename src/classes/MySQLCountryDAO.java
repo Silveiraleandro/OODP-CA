@@ -2,6 +2,7 @@ package classes;
 
 import interfaces.CountryDAO;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,15 +14,13 @@ public class MySQLCountryDAO implements CountryDAO {
     Continent continent;
     float surfaceArea = 0;
     String headOfState = "";
-
+    Country country;
 
     //Creating instances of countries and saving them in an Array list of countries
     // and returning the result of the array
     @Override
     public ArrayList<Country> getCountries() {
 
-
-        Country c = null;
         ArrayList<Country> countries = new ArrayList<Country>();
         String query = "SELECT * FROM country";
         ResultSet rs = DbConnect.getInstance().select(query);
@@ -39,8 +38,8 @@ public class MySQLCountryDAO implements CountryDAO {
                 surfaceArea = rs.getFloat(4);
                 headOfState = rs.getString(5);
 
-                c = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
-                countries.add(c);
+                country = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
+                countries.add(country);
 
             }
         } catch (SQLException e) {
@@ -56,7 +55,6 @@ public class MySQLCountryDAO implements CountryDAO {
     @Override
     public Country findCountryByCode(String code) {
 
-        Country thisCountry = null;
         String query = "SELECT * FROM country WHERE code = " + code + ";";
         ResultSet rs = DbConnect.getInstance().select(query);
 
@@ -73,7 +71,7 @@ public class MySQLCountryDAO implements CountryDAO {
                 surfaceArea = rs.getFloat(4);
                 headOfState = rs.getString(5);
 
-                thisCountry = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
+                country = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
 
             }else{
                 return null;
@@ -82,22 +80,21 @@ public class MySQLCountryDAO implements CountryDAO {
             e.printStackTrace();
         }
 
-        return thisCountry;
+        return country;
 
     }
 
     //This method receives a name from the outside and calls the db with the given query
     //populates the variables with the result set, creates a instance of country and returns it
     @Override
-    public Country findCountryByName(String name) {
+    public ArrayList<Country>findCountryByName(String name) {
 
-        Country thisCountry = null;
-
+        ArrayList<Country>requestedCountries = new ArrayList<>();
         String query = "SELECT * FROM country WHERE Name = '" + name + "';" ;
         ResultSet rs = DbConnect.getInstance().select(query);
 
         try {
-            if (rs.next()) {
+                if (rs.next()) {
 
                 code = rs.getString(1);
                 name = rs.getString(2);
@@ -109,7 +106,7 @@ public class MySQLCountryDAO implements CountryDAO {
                 surfaceArea = rs.getFloat(4);
                 headOfState = rs.getString(5);
 
-                thisCountry = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
+                country = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
 
             }else{
                 return null;
@@ -118,7 +115,7 @@ public class MySQLCountryDAO implements CountryDAO {
             e.printStackTrace();
         }
 
-        return thisCountry;
+        return requestedCountries;
 
     }
 
