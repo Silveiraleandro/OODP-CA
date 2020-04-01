@@ -114,7 +114,7 @@ public class User {
         try {
             input = reader.readLine();
             countries = daobj.findCountryByName(input);
-
+            System.out.println(countries);
         } catch (IOException e) {
             e.printStackTrace();
         }
