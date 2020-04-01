@@ -109,7 +109,7 @@ public class User {
         System.out.println("Type in the Country Name: \n");
 
         String input;
-        ArrayList<Country> allCountries = null;
+        ArrayList<Country>allCountries = null;
 
         try {
             input = reader.readLine();
@@ -126,12 +126,20 @@ public class User {
 
     private void createCountry() {
 
-        String input;
+        String input =null;
 
         System.out.println("Create and save a new Country!");
-        System.out.println("Please start inserting a 1 to 3 digits Country code  \n");
+        System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
 
-
+        try {
+            input = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (input.length() > 3 || input.length() < 1){
+            System.out.println("Please try again typing in a 1, 2 or 3 digits code");
+        createCountry();
+        }
 
     }
 

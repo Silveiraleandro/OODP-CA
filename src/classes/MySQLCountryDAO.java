@@ -21,8 +21,8 @@ public class MySQLCountryDAO implements CountryDAO {
     public ArrayList<Country> getCountries() {
 
 
-        ArrayList<Country> countries = new ArrayList<Country>();
         Country c = null;
+        ArrayList<Country> countries = new ArrayList<Country>();
         String query = "SELECT * FROM country";
         ResultSet rs = DbConnect.getInstance().select(query);
 
@@ -92,6 +92,7 @@ public class MySQLCountryDAO implements CountryDAO {
     public Country findCountryByName(String name) {
 
         Country thisCountry = null;
+
         String query = "SELECT * FROM country WHERE Name = '" + name + "';" ;
         ResultSet rs = DbConnect.getInstance().select(query);
 
