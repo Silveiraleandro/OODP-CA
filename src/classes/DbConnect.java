@@ -1,10 +1,10 @@
 package classes;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 
 //this class recieves the data and delivers it to the next next class (countryDAO or database)
 // it is a bridge between the database class and the countryDAO

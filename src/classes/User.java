@@ -47,19 +47,18 @@ public class User {
         System.out.print("Please select an option from 1-5\r\n");
 
         String input = userReader();
-        int in = Integer.parseInt(input);
 
-        if (input.length() < 0 || input.length() > 5) {
-            System.out.println("You have entered an invalid selection, please try again\r\n");
-            internalMenu(in);
-        } else if (input.equals(5)) {
-            System.out.println("You have quit the program\r\n");
-            System.exit(1);
+        if (!input.matches("[1-5]")) {
+            System.out.println("Select a number from 1-5 please try again\r\n");
+            userMenu();
         } else {
+            int in = Integer.parseInt(input);
             System.out.println("You have chosen to: ");
             internalMenu(in);
         }
+
     }
+
     //this method displays the internalMenu
     public void internalMenu(Integer option) {
         MySQLCountryDAO dao = new MySQLCountryDAO();
@@ -76,12 +75,14 @@ public class User {
             case 4:
                 createCountry();
                 break;
-            default:
-                System.out.println("See you again soon!");
+            case 5:
+                System.out.println("Thank you for using the system");
                 System.exit(0);
+                break;
         }
         userMenu();
     }
+
     //method that displays all the countries in the db
     private void viewAllCountries() {
         System.out.println("view all Countries!\n");
@@ -90,6 +91,7 @@ public class User {
         System.out.println(allCountries);
         userMenu();
     }
+
     //method that searches for a country in the db, which code matches a code given by a user and prints the country in the terminal
     private void searchCountryByCode() {
 
@@ -109,6 +111,7 @@ public class User {
             searchCountryByCode();
         }
     }
+
     //method that searches for one or more countries in the db, which name matches a name given by a user and prints the country(s) in the terminal
     private void searchCountryByName() {
         System.out.println("Find a Country by it's Name!");
@@ -121,6 +124,7 @@ public class User {
         if (countries.size() <= 0) {
 
             System.out.println("Sorry but we could not find " + input + " in our list");
+            searchCountryByName();
         } else {
 
             System.out.println("The result search for the name " + input + " is:");
@@ -128,41 +132,40 @@ public class User {
         }
         userMenu();
     }
+
     //method creates and save a new country in the db
     private void createCountry() {
-        //display code insertion information to the user
+
         System.out.println("Create and save a new Country!");
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
-
-        //code insertion validation
         String inputCode = userReader();
-       if (inputCode.length() > 3) {
-           System.out.println("Please try again typing in a 1, 2 or 3 digits code");
-           createCountry();
-
+        //code insertion validation
+        if (!inputCode.matches("[a-zA-Z]+[1-9]+[+]") || inputCode.length() <= 3) {
+            System.out.println("Please try again typing in a 1, 2 or 3 digits code");
+            createCountry();
         /*duplication code validation
        if (daobj.findCountryByCode(inputCode)!=null) {
                 System.out.println("The code " + inputCode + " already exists in our system. Please insert a different code"); */
-       }
-        //display name insertion information to the user
+        }
         System.out.println("Please insert the country name: ");
         String inputName = userReader();
+        //name insertion validation
+        if (!inputCode.matches("[a-zA-Z]")) {
+            System.out.println("The name should contain only letters");
 
-        //continent insertion information
-        System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: "
-                + "\n1 - Asia\n2 - Africa\n3 - Oceania\n4 - Europe\n5 Antarctica\n6 - North America \n7 - South America");
+        }
+
+        System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: " + "\n1 - Europe\n2 - Asia\n3 - North America\n4 - South America\n5 Africa\n6 - Oceania\n7 - Antarctica");
         System.out.println("Please enter only one number from 1 to 7.");
 
         //saving in the variable input the user input that is coming with the method
         Continent continent = continentChoice();
 
-        //Surface area insertion information
         System.out.println("Please insert the land area of the country");
         float inputSurfaceArea = Float.parseFloat(userReader());
 
-        //headOfState insertion information
         System.out.println("Please insert the name of the President/king");
-        String inputHeadOfState =userReader();
+        String inputHeadOfState = userReader();
 
         //Create a new object country with all the attributes
         country = new Country.BuilderCountry(inputCode, inputName, continent, inputSurfaceArea, inputHeadOfState).build();
@@ -175,6 +178,7 @@ public class User {
 
         userMenu();
     }
+
     //this method facilitates when choosing the continent.
     // It is basically a Switch is a control statement that allows a value to change control of execution.
     public Continent continentChoice() {
@@ -182,30 +186,30 @@ public class User {
         Continent inputContinent = null;
 
         String option = userReader();
-        while(!option.matches("[1-7]")) {
+        while (!option.matches("[1-7]")) {
 
         }
-        switch(Integer.parseInt(option)) {
+        switch (Integer.parseInt(option)) {
             case 1:
-                inputContinent = Continent.Asia;
-                break;
-            case 2:
-                inputContinent = Continent.Africa;
-                break;
-            case 3:
-                inputContinent = Continent.Oceania;
-                break;
-            case 4:
                 inputContinent = Continent.Europe;
                 break;
-            case 5:
-                inputContinent = Continent.Antarctica;
+            case 2:
+                inputContinent = Continent.Asia;
                 break;
-            case 6:
+            case 3:
                 inputContinent = Continent.NorthAmerica;
                 break;
-            case 7:
+            case 4:
                 inputContinent = Continent.SouthAmerica;
+                break;
+            case 5:
+                inputContinent = Continent.Africa;
+                break;
+            case 6:
+                inputContinent = Continent.Oceania;
+                break;
+            case 7:
+                inputContinent = Continent.Antarctica;
                 break;
         }
 
