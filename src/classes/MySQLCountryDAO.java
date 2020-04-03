@@ -118,14 +118,13 @@ public class MySQLCountryDAO implements CountryDAO {
     //This method receives a country coming from the user class and saves this new entrance into the database
     @Override
     public boolean saveCountry(Country country) {
-
         String code = country.getCode();
         String name = country.getName();
         Continent continent = country.getContinent();
         float surfaceArea = country.getSurfaceArea();
         String headOfState = country.getHeadOfState();
 
-        String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values(" + code + ", '" + name + "', '" + continent + "', " + surfaceArea + ", '" + headOfState + "');";
+        String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values('" + code + "', '" + name + "', '" + continent.getContinent() + "', " + surfaceArea + ", '" + headOfState + "');";
         return DbConnect.getInstance().storeNew(query);
     }
 }

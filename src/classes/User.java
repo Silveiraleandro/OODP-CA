@@ -1,9 +1,6 @@
 package classes;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import interfaces.CountryDAO;
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,6 +32,10 @@ public class User {
 
     //method that displays the main menu that the user sees
     public void userMenu() {
+
+        System.out.println("WELCOME TO THE COUNTRY WORLD");
+        System.out.println("Here you can check our list of countries, search for them by name or code or create your own");
+        System.out.println("GIVE IT A TRY>>>>>>> LET's START?");
 
         System.out.println("-----------------------------------");
         System.out.println("Menu Options to:");
@@ -78,6 +79,7 @@ public class User {
             case 5:
                 System.out.println("Thank you for using the system");
                 System.exit(0);
+                DbConnect.getInstance().close();
                 break;
         }
         userMenu();
@@ -138,24 +140,14 @@ public class User {
 
         System.out.println("Create and save a new Country!");
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
-        String inputCode = userReader();
+        String inputCode;
         //code insertion validation
-        if (!inputCode.matches("[a-zA-Z]+[1-9]+[+]") || inputCode.length() <= 3) {
-            System.out.println("Please try again typing in a 1, 2 or 3 digits code");
-            createCountry();
-        /*duplication code validation
-       if (daobj.findCountryByCode(inputCode)!=null) {
-                System.out.println("The code " + inputCode + " already exists in our system. Please insert a different code"); */
-        }
+        inputCode = validatingInputCode();
+
         System.out.println("Please insert the country name: ");
         String inputName = userReader();
-        //name insertion validation
-        if (!inputCode.matches("[a-zA-Z]")) {
-            System.out.println("The name should contain only letters");
 
-        }
-
-        System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: " + "\n1 - Europe\n2 - Asia\n3 - North America\n4 - South America\n5 Africa\n6 - Oceania\n7 - Antarctica");
+        System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: " + "\n1 - Europe\n2 - Asia\n3 - North America\n4 - South America\n5 - Africa\n6 - Oceania\n7 - Antarctica");
         System.out.println("Please enter only one number from 1 to 7.");
 
         //saving in the variable input the user input that is coming with the method
@@ -172,10 +164,12 @@ public class User {
 
         //saving the created new country
         daobj.saveCountry(country);
-
-        //display message to user
-        System.out.println(inputName + "is the new country created by you and saved in the system");
-
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("The country "+inputName+" has been successfully created all the info is bellow");
+        System.out.println(country);
+        System.out.println("thank you for using our system");
         userMenu();
     }
 
@@ -214,6 +208,29 @@ public class User {
         }
 
         return inputContinent;
+    }
+    //this method verifies if the code the customer inputs already exists in the db
+    //and if it is within the allowed lenght
+    private String validatingInputCode() {
+
+        String inputCode = "";
+        inputCode = userReader();
+
+        if (inputCode.length() > 3 || inputCode.length() == 0) {
+            System.out.println("Invalid code. Please try again.");
+            inputCode = userReader();
+            validatingInputCode();
+        }
+
+        if (inputCode.equals(daobj.findCountryByCode(inputCode))) {
+            System.out.println("Sorry but this code already exists in the system");
+            System.out.println("Please try another one");
+            inputCode = userReader();
+            validatingInputCode();
+        }
+
+        return inputCode;
+
     }
 
 }
