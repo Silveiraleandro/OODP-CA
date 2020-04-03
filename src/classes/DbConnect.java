@@ -10,7 +10,10 @@ import java.sql.Statement;
 // it is a bridge between the database class and the countryDAO
 public class DbConnect {
 
+    //instance to provide access in other classes e categorizes Singleton pattern
     private static DbConnect instance;
+
+    //private Global variables
     private String db = "jdbc:mysql://52.50.23.197:3306/world";
     private String username = "cctstudent";
     private String password = "Pass1234!";
@@ -18,7 +21,7 @@ public class DbConnect {
     private Statement stmt = null;
     private ResultSet rs = null;
 
-    //my constructor method establishes the db connection
+    //my constructor method establishes the db connection and categorizes Singleton pattern
     private DbConnect() {
 
 
