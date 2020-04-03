@@ -143,7 +143,7 @@ public class User {
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
         String inputCode;
         //code insertion validation
-        inputCode = userReader();
+        inputCode = validatingInputCode();
 
         System.out.println("Please insert the country name: ");
         String inputName = userReader();
@@ -155,7 +155,12 @@ public class User {
         Continent continent = continentChoice();
 
         System.out.println("Please insert the land area of the country");
-        float inputSurfaceArea = Float.parseFloat(userReader());
+        String userInput = userReader();
+        if (!userInput.matches("[1-9]" + "[.]") || userInput.length() > 100000) {
+            System.out.println("Please insert only numbers for land area");
+            createCountry();
+        }
+        float inputSurfaceArea = Float.parseFloat(userInput);
 
         System.out.println("Please insert the name of the President/king");
         String inputHeadOfState = userReader();
@@ -165,12 +170,10 @@ public class User {
 
         //saving the created new country
         daobj.saveCountry(country);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
-        System.out.println("The country " + inputName + " has been successfully created all the info is bellow");
-        System.out.println(country);
-        System.out.println("thank you for using our system");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>THANK YOU>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("   thank you for using our system    ");
         userMenu();
     }
 
@@ -217,11 +220,22 @@ public class User {
 
         String inputCode = "";
         inputCode = userReader();
-        if (inputCode.length() <= 3) {
 
+        if (inputCode.length() > 3) {
+            System.out.println("Remember it must be 1 to 3 digits code. try again");
+/*
+            country = daobj.findCountryByCode(inputCode);
+
+            validatingInputCode();
+        } if (country == null) {
+
+            System.out.println("Sorry, this code already exists. try again");
+            validatingInputCode(); */
+        } else {
             System.out.println("The code entered was: " + inputCode);
 
         }
+
         return inputCode;
     }
 }

@@ -72,7 +72,7 @@ public class DbConnect {
 
         } catch (SQLException e) {
             //catch block
-            System.out.println("Duplicated values");;
+            System.out.println("Duplicated values");
             return false;
         }
     }

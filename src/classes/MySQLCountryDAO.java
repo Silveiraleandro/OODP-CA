@@ -1,6 +1,7 @@
 package classes;
 
 import interfaces.CountryDAO;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 public class MySQLCountryDAO implements CountryDAO {
 
     Country country;
+
     //Creating instances of countries and saving them in an Array list of countries
     // and returning the result of the array
     @Override
@@ -20,15 +22,15 @@ public class MySQLCountryDAO implements CountryDAO {
         try {
             while (rs.next()) {
 
-              String  code = rs.getString(1);
-              String name = rs.getString(2);
-              String continentName = rs.getString(3).replace(" ", "");
+                String code = rs.getString(1);
+                String name = rs.getString(2);
+                String continentName = rs.getString(3).replace(" ", "");
                 if (continentName.isEmpty()) {
                     continue;
                 }
-              Continent  continent = Continent.valueOf(rs.getString(3).replace(" ", ""));
-              float  surfaceArea = rs.getFloat(4);
-              String headOfState = rs.getString(5);
+                Continent continent = Continent.valueOf(rs.getString(3).replace(" ", ""));
+                float surfaceArea = rs.getFloat(4);
+                String headOfState = rs.getString(5);
 
                 Country country = new Country.BuilderCountry(code, name, continent, surfaceArea, headOfState).build();
                 countries.add(country);
@@ -54,19 +56,21 @@ public class MySQLCountryDAO implements CountryDAO {
         try {
             if (rs.next()) {
 
-            String coder = rs.getString(1);
-            String name = rs.getString(2);
-
-              Continent  continent = Continent.valueOf(rs.getString(3).replace(" ", ""));
-               float surfaceArea = rs.getFloat(4);
-               String headOfState = rs.getString(5);
+                String codeR = rs.getString(1);
+                String name = rs.getString(2);
+                String coder = rs.getString(3).replace(" ", "");
+                if (coder.isEmpty()) {
+                    return null;
+                }
+                Continent continent = Continent.valueOf(coder);
+                float surfaceArea = rs.getFloat(4);
+                String headOfState = rs.getString(5);
 
                 country = new Country.BuilderCountry(coder, name, continent, surfaceArea, headOfState).build();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return country;
 
     }
@@ -78,7 +82,7 @@ public class MySQLCountryDAO implements CountryDAO {
 
         ArrayList<Country> requestedCountries = new ArrayList<>();
         //name LIKE '%\"+name+\"%'+name.trim()+;";
-        String query = "SELECT * FROM country WHERE Name = '" + name + "';";
+        String query = "SELECT * FROM country WHERE Name LIKE '%" + name + "%';";
         System.out.println(query);
         ResultSet rs = DbConnect.getInstance().select(query);
 
@@ -116,11 +120,16 @@ public class MySQLCountryDAO implements CountryDAO {
         float surfaceArea = country.getSurfaceArea();
         String headOfState = country.getHeadOfState();
 
-      // String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values('" + code + "', '" + name + "', '" + continent.getContinent() + "', " + surfaceArea + ", '" + headOfState + "');";
-        String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values('" + code + "', '" + name + "', '" + continent + "', '" + surfaceArea + "', '" + headOfState + "');";
-        return DbConnect.getInstance().storeNew(query);
+        String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values('" + code + "', '" + name + "', '" + continent.getContinent() + "', " + surfaceArea + ", '" + headOfState + "');";
 
-
+        boolean store = DbConnect.getInstance().storeNew(query);
+        if (store){
+            System.out.println("The country is now in the system :)\n");
+        } else{
+            System.out.println("Something went wrong, Please try again :(\n");
+        }
+        return store;
     }
+
 
 }
