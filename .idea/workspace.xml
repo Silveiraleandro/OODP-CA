@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d2b133ba-7cb4-476f-9f8d-80c00dfe2c31" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Continent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Continent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/OODP-CA/classes/DbConnect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OODP-CA/classes/DbConnect.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/OODP-CA/classes/MySQLCountryDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OODP-CA/classes/MySQLCountryDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/OODP-CA/classes/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/OODP-CA/classes/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/DbConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/DbConnect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/MySQLCountryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/MySQLCountryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/User.java" afterDir="false" />
     </list>

@@ -1,9 +1,11 @@
 package classes;
 
 import interfaces.CountryDAO;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 //this class shows a menu and connects with the class Main
@@ -33,18 +35,17 @@ public class User {
     //method that displays the main menu that the user sees
     public void userMenu() {
 
-        System.out.println("WELCOME TO THE COUNTRY WORLD");
-        System.out.println("Here you can check our list of countries, search for them by name or code or create your own");
-        System.out.println("GIVE IT A TRY>>>>>>> LET's START?");
 
-        System.out.println("-----------------------------------");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>WELCOME USER>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("Menu Options to:");
         System.out.println("1. View of all Countries");
         System.out.println("2. Find a Country by it's code");
         System.out.println("3. Find a Country by it's name");
         System.out.println("4. Create a Country  and to the list");
         System.out.println("5. Exit the program");
-        System.out.println("----------------------------------");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.print("Please select an option from 1-5\r\n");
 
         String input = userReader();
@@ -142,7 +143,7 @@ public class User {
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
         String inputCode;
         //code insertion validation
-        inputCode = validatingInputCode();
+        inputCode = userReader();
 
         System.out.println("Please insert the country name: ");
         String inputName = userReader();
@@ -167,7 +168,7 @@ public class User {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>");
-        System.out.println("The country "+inputName+" has been successfully created all the info is bellow");
+        System.out.println("The country " + inputName + " has been successfully created all the info is bellow");
         System.out.println(country);
         System.out.println("thank you for using our system");
         userMenu();
@@ -209,30 +210,20 @@ public class User {
 
         return inputContinent;
     }
+
     //this method verifies if the code the customer inputs already exists in the db
     //and if it is within the allowed lenght
     private String validatingInputCode() {
 
         String inputCode = "";
         inputCode = userReader();
+        if (inputCode.length() <= 3) {
 
-        if (inputCode.length() > 3 || inputCode.length() == 0) {
-            System.out.println("Invalid code. Please try again.");
-            inputCode = userReader();
-            validatingInputCode();
+            System.out.println("The code entered was: " + inputCode);
+
         }
-
-        if (inputCode.equals(daobj.findCountryByCode(inputCode))) {
-            System.out.println("Sorry but this code already exists in the system");
-            System.out.println("Please try another one");
-            inputCode = userReader();
-            validatingInputCode();
-        }
-
         return inputCode;
-
     }
-
 }
 
 
