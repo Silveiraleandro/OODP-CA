@@ -10,6 +10,7 @@ import interfaces.CountryDAO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /*
@@ -164,7 +165,7 @@ public class User {
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
         String inputCode;
         //code insertion validation
-        inputCode = validatingInputCode();
+        inputCode = userReader();
 
         System.out.println("Please insert the country name: ");
         String inputName = userReader();
@@ -256,7 +257,7 @@ public class User {
             validatingInputCode();
             //if country  has any entry (rs to validade)
         }
-        if (country == null) {
+        if (DbConnect.getInstance().select()) {
 
             System.out.println("Sorry, this code already exists. try again");
             validatingInputCode();
