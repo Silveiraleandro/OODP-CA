@@ -1,3 +1,8 @@
+/*
+@Author: Leandro Silveira
+ */
+
+
 package classes;
 
 import interfaces.CountryDAO;
@@ -5,10 +10,11 @@ import interfaces.CountryDAO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-//this class shows a menu and connects with the class Main
+/*
+this class shows a menu and connects with the class Main
+ */
 public class User {
 
     CountryDAO daobj = new MySQLCountryDAO();
@@ -20,7 +26,9 @@ public class User {
         userMenu();
     }
 
-    //method to read input from the user
+    /*
+    method to read input from the user
+     */
     private String userReader() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String input = null;
@@ -32,7 +40,9 @@ public class User {
         return input;
     }
 
-    //method that displays the main menu that the user sees
+    /*
+    method that displays the main menu that the user sees
+     */
     public void userMenu() {
 
 
@@ -61,7 +71,9 @@ public class User {
 
     }
 
-    //this method displays the internalMenu
+    /*
+    this method displays the internalMenu
+     */
     public void internalMenu(Integer option) {
         MySQLCountryDAO dao = new MySQLCountryDAO();
         switch (option) {
@@ -80,13 +92,16 @@ public class User {
             case 5:
                 System.out.println("Thank you for using the system");
                 System.exit(0);
+                //closing the connection with the database
                 DbConnect.getInstance().close();
                 break;
         }
         userMenu();
     }
 
-    //method that displays all the countries in the db
+    /*
+    method that displays all the countries in the db
+     */
     private void viewAllCountries() {
         System.out.println("view all Countries!\n");
 
@@ -95,7 +110,9 @@ public class User {
         userMenu();
     }
 
-    //method that searches for a country in the db, which code matches a code given by a user and prints the country in the terminal
+    /*
+    method that searches for a country in the db, which code matches a code given by a user and prints the country in the terminal
+     */
     private void searchCountryByCode() {
 
         System.out.println("Find a Country by it's Code!");
@@ -115,7 +132,9 @@ public class User {
         }
     }
 
-    //method that searches for one or more countries in the db, which name matches a name given by a user and prints the country(s) in the terminal
+    /*
+    method that searches for one or more countries in the db, which name matches a name given by a user and prints the country(s) in the terminal
+     */
     private void searchCountryByName() {
         System.out.println("Find a Country by it's Name!");
         System.out.println("Type in the Country Name: \n");
@@ -136,7 +155,9 @@ public class User {
         userMenu();
     }
 
-    //method creates and save a new country in the db
+    /*
+    method creates and save a new country in the db
+     */
     private void createCountry() {
 
         System.out.println("Create and save a new Country!");
@@ -165,7 +186,9 @@ public class User {
         System.out.println("Please insert the name of the President/king");
         String inputHeadOfState = userReader();
 
-        //Create a new object country with all the attributes
+        /*
+        Create a new object country with all the attributes
+         */
         country = new Country.BuilderCountry(inputCode, inputName, continent, inputSurfaceArea, inputHeadOfState).build();
 
         //saving the created new country
@@ -177,8 +200,10 @@ public class User {
         userMenu();
     }
 
-    //this method facilitates when choosing the continent.
-    // It is basically a Switch is a control statement that allows a value to change control of execution.
+    /*
+    this method facilitates when choosing the continent.
+    It is basically a Switch is a control statement that allows a value to change control of execution.
+     */
     public Continent continentChoice() {
 
         Continent inputContinent = null;
@@ -214,8 +239,10 @@ public class User {
         return inputContinent;
     }
 
-    //this method verifies if the code the customer inputs already exists in the db
-    //and if it is within the allowed lenght
+    /*
+    this method verifies if the code the customer inputs already exists in the db
+    and if it is within the allowed length
+    */
     private String validatingInputCode() {
 
         String inputCode = "";
@@ -223,14 +250,16 @@ public class User {
 
         if (inputCode.length() > 3) {
             System.out.println("Remember it must be 1 to 3 digits code. try again");
-/*
+
             country = daobj.findCountryByCode(inputCode);
 
             validatingInputCode();
-        } if (country == null) {
+            //if country  has any entry (rs to validade)
+        }
+        if (country == null) {
 
             System.out.println("Sorry, this code already exists. try again");
-            validatingInputCode(); */
+            validatingInputCode();
         } else {
             System.out.println("The code entered was: " + inputCode);
 
