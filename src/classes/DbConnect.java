@@ -89,9 +89,10 @@ public class DbConnect {
         }
     }
 
+
     /*
-    method that selects any query that the client needs
-     */
+        method that selects any query that the client needs
+         */
     public ResultSet select(String query) {
         // Execute the query
         try {
@@ -117,4 +118,5 @@ public class DbConnect {
             e.printStackTrace();
         }
     }
+
 }

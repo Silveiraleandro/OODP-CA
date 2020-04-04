@@ -51,17 +51,17 @@ public class User {
         System.out.println(">>>>>>>>>>>>>WELCOME USER>>>>>>>>>>>>");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("Menu Options to:");
-        System.out.println("1. View of all Countries");
+        System.out.println("1. list of all Countries in the db");
         System.out.println("2. Find a Country by it's code");
         System.out.println("3. Find a Country by it's name");
-        System.out.println("4. Create a Country  and to the list");
+        System.out.println("4. Create and save a Country in db");
         System.out.println("5. Exit the program");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.print("Please select an option from 1-5\r\n");
 
         String input = userReader();
 
-        if (!input.matches("[1-5]")) {
+        if (!input.matches("[1-5]+")) {
             System.out.println("Select a number from 1-5 please try again\r\n");
             userMenu();
         } else {
@@ -163,43 +163,60 @@ public class User {
 
         System.out.println("Create and save a new Country!");
         System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
-        String inputCode;
+        String inputCode = userReader();
         //code insertion validation
-        inputCode = userReader();
-
+        if (inputCode.length() > 3) {
+            System.out.println("Remember it must be 1 to 3 digits code. try again");
+            createCountry();
+        }
         System.out.println("Please insert the country name: ");
         String inputName = userReader();
-
+        //name insertion validation
+        if (!inputName.matches("[a-zA-Z]+")) {
+            System.out.println("Sorry, you must insert letters for the country name. Please try again");
+            createCountry();
+        }
         System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: " + "\n1 - Europe\n2 - Asia\n3 - North America\n4 - South America\n5 - Africa\n6 - Oceania\n7 - Antarctica");
         System.out.println("Please enter only one number from 1 to 7.");
 
         //saving in the variable input the user input that is coming with the method
         Continent continent = continentChoice();
 
+        //validation for surface area
         System.out.println("Please insert the land area of the country");
         String userInput = userReader();
-        if (!userInput.matches("[1-9]" + "[.]") || userInput.length() > 100000) {
-            System.out.println("Please insert only numbers for land area");
+        if (!userInput.matches("[0-9]+")) {
+            System.out.println("Sorry, you must insert a number for the land area. Please try again");
             createCountry();
         }
         float inputSurfaceArea = Float.parseFloat(userInput);
 
-        System.out.println("Please insert the name of the President/king");
+        //validation for president name
+        System.out.println("Please insert the name of the head of state");
         String inputHeadOfState = userReader();
-
+        if (!inputHeadOfState.matches("[a-zA-Z ]+")) {
+            System.out.println("Sorry, you must insert letters for the head of state name. Please try again");
+            createCountry();
+        }
         /*
         Create a new object country with all the attributes
          */
         country = new Country.BuilderCountry(inputCode, inputName, continent, inputSurfaceArea, inputHeadOfState).build();
-
         //saving the created new country
         daobj.saveCountry(country);
+        System.out.println("Well done! the country "+inputName+" is now saved in the system");
+
+
+        System.out.println("\n");
+        System.out.println("\n");
+
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(">>>>>>>>>>>>>>THANK YOU>>>>>>>>>>>>>>");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("   thank you for using our system    ");
         userMenu();
     }
+
 
     /*
     this method facilitates when choosing the continent.
@@ -210,7 +227,7 @@ public class User {
         Continent inputContinent = null;
 
         String option = userReader();
-        while (!option.matches("[1-7]")) {
+        while (!option.matches("[1-7]+")) {
 
         }
         switch (Integer.parseInt(option)) {
@@ -244,7 +261,7 @@ public class User {
     this method verifies if the code the customer inputs already exists in the db
     and if it is within the allowed length
     */
-    private String validatingInputCode() {
+   /* private String validatingInputCode() {
 
         String inputCode = "";
         inputCode = userReader();
@@ -257,7 +274,7 @@ public class User {
             validatingInputCode();
             //if country  has any entry (rs to validade)
         }
-        if (DbConnect.getInstance().select()) {
+       if (DbConnect.getInstance().select(rs)) {
 
             System.out.println("Sorry, this code already exists. try again");
             validatingInputCode();
@@ -265,9 +282,10 @@ public class User {
             System.out.println("The code entered was: " + inputCode);
 
         }
-
-        return inputCode;
     }
+        return inputCode;    */
+
+
 }
 
 

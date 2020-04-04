@@ -140,9 +140,9 @@ public class MySQLCountryDAO implements CountryDAO {
 
         boolean store = DbConnect.getInstance().storeNew(query);
         if (store) {
-            System.out.println("The country is now in the system :)\n");
+            System.out.println("operation successfully completed \n");
         } else {
-            System.out.println("Something went wrong, Please try again :(\n");
+            System.out.println("Something went wrong, Please try again \n");
         }
         return store;
     }

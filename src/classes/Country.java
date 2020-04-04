@@ -6,6 +6,8 @@
 package classes;
 
 
+import java.sql.SQLException;
+
 public class Country {
     /*
     encapsulated attributes of the class
@@ -27,6 +29,7 @@ public class Country {
         this.surfaceArea = builder.surfaceArea;
         this.headOfState = builder.headOfState;
 
+
     }
 
     /*
@@ -34,13 +37,14 @@ public class Country {
      */
     @Override
     public String toString() {
-        return "Country{" + '\n' +
+        final String s = "Country=" + '\'' +
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", continent=" + continent +
                 ", surfaceArea=" + surfaceArea +
-                ", headOfState='" + headOfState + '\'' +
+                ", headOfState='" + headOfState + '\n' + '\n' +
                 '}';
+        return s;
     }
 
     /*
@@ -103,9 +107,7 @@ public class Country {
         using this setter and return the very same instance
          */
         public BuilderCountry setHeadOfState(String headOfState) {
-            this.headOfState = headOfState;
             return this;
-
         }
 
         /*
