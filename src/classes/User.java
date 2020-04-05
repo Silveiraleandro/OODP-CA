@@ -10,7 +10,6 @@ import interfaces.CountryDAO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /*
@@ -46,18 +45,12 @@ public class User {
      */
     public void userMenu() {
 
-
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>>>>>>>>>>WELCOME USER>>>>>>>>>>>>");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println("Menu Options to:");
+        System.out.println("Hello User........Menu Options to: \n");
         System.out.println("1. list of all Countries in the db");
         System.out.println("2. Find a Country by it's code");
         System.out.println("3. Find a Country by it's name");
         System.out.println("4. Create and save a Country in db");
         System.out.println("5. Exit the program");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.print("Please select an option from 1-5\r\n");
 
         String input = userReader();
 
@@ -108,7 +101,10 @@ public class User {
 
         ArrayList<Country> allCountries = daobj.getCountries();
         System.out.println(allCountries);
+        //calling menu method
         userMenu();
+        //closing the connection with the database
+        DbConnect.getInstance().close();
     }
 
     /*
@@ -125,7 +121,10 @@ public class User {
             country = daobj.findCountryByCode(input);
             System.out.println("The result search for the code " + input + " is:");
             System.out.println(country);
+            //calling menu method
             userMenu();
+            //closing the connection with the database
+            DbConnect.getInstance().close();
         } else {
 
             System.out.println("Sorry but " + input + " is not a valid code. Please enter a code with max 3 digits.\n");
@@ -140,7 +139,7 @@ public class User {
         System.out.println("Find a Country by it's Name!");
         System.out.println("Type in the Country Name: \n");
 
-        ArrayList<Country> countries = null;
+        ArrayList<Country> countries;
         String input = userReader();
         countries = daobj.findCountryByName(input);
 
@@ -153,68 +152,42 @@ public class User {
             System.out.println("The result search for the name " + input + " is:");
             System.out.println(countries);
         }
+        //calling menu method
         userMenu();
+        //closing the connection with the database
+        DbConnect.getInstance().close();
     }
 
     /*
     method creates and save a new country in the db
      */
     private void createCountry() {
+        /*
+        storing the returns of the methods - the validated inputs of the user in the designated
+        variables to be passed as parameters to build a new country obj
+        */
+        String inputCode = validatingInputCode();
 
-        System.out.println("Create and save a new Country!");
-        System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
-        String inputCode = userReader();
-        //code insertion validation
-        if (inputCode.length() > 3) {
-            System.out.println("Remember it must be 1 to 3 digits code. try again");
-            createCountry();
-        }
-        System.out.println("Please insert the country name: ");
-        String inputName = userReader();
-        //name insertion validation
-        if (!inputName.matches("[a-zA-Z]+")) {
-            System.out.println("Sorry, you must insert letters for the country name. Please try again");
-            createCountry();
-        }
-        System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: " + "\n1 - Europe\n2 - Asia\n3 - North America\n4 - South America\n5 - Africa\n6 - Oceania\n7 - Antarctica");
-        System.out.println("Please enter only one number from 1 to 7.");
+        String inputName = validatingInputName();
 
-        //saving in the variable input the user input that is coming with the method
         Continent continent = continentChoice();
 
-        //validation for surface area
-        System.out.println("Please insert the land area of the country");
-        String userInput = userReader();
-        if (!userInput.matches("[0-9]+")) {
-            System.out.println("Sorry, you must insert a number for the land area. Please try again");
-            createCountry();
-        }
-        float inputSurfaceArea = Float.parseFloat(userInput);
+        Float inputSurfaceArea = validatingInputSurfaceArea();
 
-        //validation for president name
-        System.out.println("Please insert the name of the head of state");
-        String inputHeadOfState = userReader();
-        if (!inputHeadOfState.matches("[a-zA-Z ]+")) {
-            System.out.println("Sorry, you must insert letters for the head of state name. Please try again");
-            createCountry();
-        }
+        String inputHeadOfState = validatingInputHeadOfState();
         /*
         Create a new object country with all the attributes
          */
         country = new Country.BuilderCountry(inputCode, inputName, continent, inputSurfaceArea, inputHeadOfState).build();
-        //saving the created new country
+        /*
+        saving the created new country and printing the message
+         */
         daobj.saveCountry(country);
-        System.out.println("Well done! the country "+inputName+" is now saved in the system");
-
-
-        System.out.println("\n");
-        System.out.println("\n");
-
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(">>>>>>>>>>>>>>THANK YOU>>>>>>>>>>>>>>");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println("   thank you for using our system    ");
+        System.out.println("Well done! the country " + inputName + " is now saved in the system  \n \n \n");
+        //calling menu method
         userMenu();
+        //closing the connection with the database
+        DbConnect.getInstance().close();
     }
 
 
@@ -223,12 +196,17 @@ public class User {
     It is basically a Switch is a control statement that allows a value to change control of execution.
      */
     public Continent continentChoice() {
-
+        System.out.println("Please pick one of 7 continents to place the country in ? [1-7]: " + "\n1 - Europe\n2 - Asia\n3 - North America\n4 - South America\n5 - Africa\n6 - Oceania\n7 - Antarctica");
+        System.out.println("Please enter only one number from 1 to 7.");
         Continent inputContinent = null;
 
         String option = userReader();
-        while (!option.matches("[1-7]+")) {
+        if (option.isEmpty()) {
+            continentChoice();
+        }
 
+        if (!option.matches("[1-7]")) {
+            continentChoice();
         }
         switch (Integer.parseInt(option)) {
             case 1:
@@ -261,30 +239,72 @@ public class User {
     this method verifies if the code the customer inputs already exists in the db
     and if it is within the allowed length
     */
-   /* private String validatingInputCode() {
+    private String validatingInputCode() {
+        System.out.println("Please start inserting a 1 to 3 digits Country code:  \n");
 
-        String inputCode = "";
-        inputCode = userReader();
-
-        if (inputCode.length() > 3) {
-            System.out.println("Remember it must be 1 to 3 digits code. try again");
-
+        Boolean validCode = true;
+        String inputCode = userReader();
+        //this loop checks the if the user inputs more than 3 digits
+        while (validCode) {
+            while (inputCode.length() > 3) {
+                System.out.println("Remember it must be 1 to 3 digits code. try again: ");
+                inputCode = userReader();
+            }
+            //instantiating a country obj that receives a country obj coming from MySQLCountryDAo
             country = daobj.findCountryByCode(inputCode);
+            //checking if the country obj contains the user's input
+            if (country.getCode().contains(inputCode)) {
+                System.out.println("Sorry, this code already exists in the system. Please try another one: ");
+                inputCode = userReader();
+            } else {
+                validCode = false;
 
-            validatingInputCode();
-            //if country  has any entry (rs to validade)
+                System.out.println("The code entered was: " + inputCode);
+            }
         }
-       if (DbConnect.getInstance().select(rs)) {
+        return inputCode;
 
-            System.out.println("Sorry, this code already exists. try again");
-            validatingInputCode();
-        } else {
-            System.out.println("The code entered was: " + inputCode);
-
-        }
     }
-        return inputCode;    */
 
+    /*
+    this method checks if the user inputs only letters when choosing a name for the country
+     */
+    public String validatingInputName() {
+        System.out.println("Please insert the country name: ");
+        String inputName = userReader();
+        if (!inputName.matches("[a-zA-Z]+")) {
+            System.out.println("Sorry, you must insert letters for the country name. Please try again");
+            inputName = userReader();
+        }
+        return inputName;
+    }
+
+    /*
+    this method checks if the user inputs only integer numbers when setting the surface area
+     */
+    public Float validatingInputSurfaceArea() {
+
+        System.out.println("Please insert the land area of the country: ");
+        String userInput = userReader();
+        if (!userInput.matches("[0-9]+")) {
+            System.out.println("Sorry, you must insert a number for the land area. Please try again");
+            userInput = userReader();
+        }
+        return Float.parseFloat(userInput);
+    }
+
+    /*
+    this method checks if the user inputs only letters when setting a name for the head of state
+     */
+    public String validatingInputHeadOfState() {
+        System.out.println("Please insert the name of the head of state");
+        String inputHeadOfState = userReader();
+        if (!inputHeadOfState.matches("[a-zA-Z ]+")) {
+            System.out.println("Sorry, you must insert letters for the head of state name. Please try again");
+            inputHeadOfState = userReader();
+        }
+        return inputHeadOfState;
+    }
 
 }
 

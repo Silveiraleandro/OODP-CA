@@ -37,14 +37,13 @@ public class Country {
      */
     @Override
     public String toString() {
-        final String s = "Country=" + '\'' +
+        return "Country=" + '\'' +
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", continent=" + continent +
                 ", surfaceArea=" + surfaceArea +
                 ", headOfState='" + headOfState + '\n' + '\n' +
                 '}';
-        return s;
     }
 
     /*

@@ -84,7 +84,7 @@ public class DbConnect {
 
         } catch (SQLException e) {
             //catch block
-            System.out.println("Duplicated values");
+            System.out.println("The country code entered already exists");
             return false;
         }
     }
