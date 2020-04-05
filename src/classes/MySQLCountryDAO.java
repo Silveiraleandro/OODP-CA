@@ -30,6 +30,7 @@ public class MySQLCountryDAO implements CountryDAO {
     public ArrayList<Country> getCountries() {
 
         ArrayList<Country> countries = new ArrayList<>();
+        //converting the method into a mysql query
         String query = "SELECT * FROM country";
         ResultSet rs = DbConnect.getInstance().select(query);
 
@@ -64,7 +65,7 @@ public class MySQLCountryDAO implements CountryDAO {
     */
     @Override
     public Country findCountryByCode(String code) {
-
+        //converting the method into a mysql query
         String query = "SELECT * FROM country WHERE code = '" + code + "';";
         ResultSet rs = DbConnect.getInstance().select(query);
 
@@ -97,6 +98,7 @@ public class MySQLCountryDAO implements CountryDAO {
     public ArrayList<Country> findCountryByName(String name) {
 
         ArrayList<Country> requestedCountries = new ArrayList<>();
+        //converting the method into a mysql query
         String query = "SELECT * FROM country WHERE Name LIKE '%" + name.trim() + "%';";
         ResultSet rs = DbConnect.getInstance().select(query);
 
@@ -135,7 +137,7 @@ public class MySQLCountryDAO implements CountryDAO {
         Continent continent = country.getContinent();
         float surfaceArea = country.getSurfaceArea();
         String headOfState = country.getHeadOfState();
-
+        //converting the method into a mysql query
         String query = "INSERT INTO world.country(Code, Name, Continent, SurfaceArea, HeadOfState)values('" + code + "', '" + name + "', '" + continent.getContinent() + "', " + surfaceArea + ", '" + headOfState + "');";
 
         boolean store = DbConnect.getInstance().storeNew(query);
